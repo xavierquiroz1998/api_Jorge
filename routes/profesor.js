@@ -10,6 +10,12 @@ router.get('/', async function (req, res) {
 });
 
 
+router.get('/xHorario', async function (req, res) {
+  const result = await pool.query('select * from profesor_x_horario')
+  res.send(result.rows)
+});
+
+
 
 router.post('/', async function (req, res) {
   const text = 'INSERT INTO tb_profesores(id, identificacion, nombres, apellidos, celular, correo, domicilio, estado) VALUES($1, $2, $3, $4, $5, $6, $7,$8) RETURNING *'
