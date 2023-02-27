@@ -9,16 +9,11 @@ router.get('/', async function (req, res) {
     res.send(result.rows)
 });
 
-router.get('/usuario', async function (req, res) {
-    const result = await pool.query('select * from menu')
-    res.send(result.rows)
-});
-
 
 router.post('/', async function (req, res) {
 
-    const text = 'INSERT INTO menu_x_usuario(id_menu, id_usuario, "create", update, search, delete, id) VALUES($1, $2, $3, $4, $5, $6, $7) RETURNING *'
-    const values = [req.body.id_menu, req.body.id_usuario, req.body.create, req.body.update, false, req.body.delete, await getMax() + 1]
+    const text = 'INSERT INTO menu_x_usuario(id, id_usuario, id_menu) VALUES($1, $2, $3) RETURNING *'
+    const values = [await getMax() + 1, req.body.id_usuario, req.body.id_menu,  ]
     try {
         const result = await pool.query(text, values);
         res.send(result.rows[0])
@@ -26,7 +21,6 @@ router.post('/', async function (req, res) {
         console.log(error);
         res.send({});
     }
-
 });
 
 

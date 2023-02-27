@@ -5,13 +5,13 @@ const { pool} = require('../pg')
 
  
 router.get('/', async function(req, res){
-    const result = await pool.query('select * from usuarios')
+    const result = await pool.query('select * from tb_usuarios')
     res.send( result.rows)
 });
 
 router.post('/', async function(req, res){
 
-    const text = 'INSERT INTO usuarios(id, usuario, nombres, identificacion, domicilio, correo, celular, estado, fecha_trans, usuario_creacion, contrasenia) VALUES($1, $2, $3, $4,$5, $6, $7, $8,$9, $10, $11) RETURNING *'
+    const text = 'INSERT INTO tb_usuarios(id, usuario, nombres, identificacion, domicilio, correo, celular, estado, fecha_trans, usuario_creacion, contrasenia) VALUES($1, $2, $3, $4,$5, $6, $7, $8,$9, $10, $11) RETURNING *'
     const values = [await getMax() + 1, req.body.usuario, req.body.nombres, req.body.identificacion, req.body.domicilio, req.body.correo, req.body.celular, req.body.estado, req.body.fecha_trans, req.body.usuario_creacion, req.body.contrasenia]
 try {
     const result = await pool.query(text,values)
@@ -23,19 +23,21 @@ try {
     
 });
 
-router.get('/login/:usuario', async function(req, res){
+router.get('/login/:usuario/:contra', async function(req, res){
     var u= req.params.usuario;
-    var query = "select * from usuarios where usuario = '"+u+"'";
+    var c= req.params.contra;
+    var query = "select * from tb_usuarios where usuario = '"+u+"'"+" and contrasenia='"+c+"'";
     try {
         const result = await pool.query(query)
         res.send( result.rows[0])
     } catch (error) {
+        print(error);
         res.send([]);
     }
 });
 
 router.post('/anular', async function (req, res) {
-    const text = "UPDATE usuarios set estado = 'I' where id= $1 RETURNING *"
+    const text = "UPDATE tb_usuarios set estado = 'I' where id= $1 RETURNING *"
     const values = [req.body.id]
     try {
         const resultado = await pool.query(text, values)
@@ -48,7 +50,7 @@ router.post('/anular', async function (req, res) {
 
 async function getMax(params) {
     try {
-      const result = await pool.query("select coalesce (Max(id),1) from usuarios")
+      const result = await pool.query("select coalesce (Max(id),1) from tb_usuarios")
       return result.rows[0].coalesce;
     } catch (error) {
       return 1;
