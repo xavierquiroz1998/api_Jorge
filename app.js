@@ -10,6 +10,7 @@ const tb_catalogo = require('./routes/catalogo')
 const horario = require('./routes/horarios')
 const profesor = require('./routes/profesor')
 const familiares = require('./routes/familiares')
+const cursos = require('./routes/curso')
 const body_parser = require('body-parser');
 const cors = require('cors');
 
@@ -28,6 +29,7 @@ app.use('/catalogos', tb_catalogo);
 app.use('/horarios', horario);
 app.use('/profesor', profesor);
 app.use('/familiares', familiares);
+app.use('/cursos', cursos);
 
 //app.use( express.static('public') );
 
