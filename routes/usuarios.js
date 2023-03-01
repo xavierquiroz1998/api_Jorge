@@ -11,8 +11,8 @@ router.get('/', async function(req, res){
 
 router.post('/', async function(req, res){
 
-    const text = 'INSERT INTO tb_usuarios(id, usuario, nombres, identificacion, domicilio, correo, celular, estado, fecha_trans, usuario_creacion, contrasenia) VALUES($1, $2, $3, $4,$5, $6, $7, $8,$9, $10, $11) RETURNING *'
-    const values = [await getMax() + 1, req.body.usuario, req.body.nombres, req.body.identificacion, req.body.domicilio, req.body.correo, req.body.celular, req.body.estado, req.body.fecha_trans, req.body.usuario_creacion, req.body.contrasenia]
+    const text = 'INSERT INTO tb_usuarios(id, usuario, nombres, identificacion, domicilio, correo, celular,contrasenia, estado) VALUES($1, $2, $3, $4,$5, $6, $7, $8,$9) RETURNING *'
+    const values = [await getMax() + 1, req.body.usuario, req.body.nombres, req.body.identificacion, req.body.domicilio, req.body.correo, req.body.celular, req.body.contrasenia, req.body.estado]
 try {
     const result = await pool.query(text,values)
     res.send( result.rows[0])
