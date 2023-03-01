@@ -9,6 +9,12 @@ router.get('/', async function(req, res){
     res.send( result.rows)
 });
 
+router.get('/det/:idcurso', async function(req, res){
+  var c= req.params.idcurso;
+    const result = await pool.query("select * from curso_det where id_cab = '"+c+"'")
+    res.send( result.rows)
+});
+
 router.post('/', async function(req, res){
 
     const text = 'INSERT INTO cursos (id, descripcion, periodo, estado) VALUES($1, $2, $3, $4) RETURNING *'
