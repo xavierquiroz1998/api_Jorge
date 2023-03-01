@@ -67,7 +67,7 @@ async function getMax(params) {
   }
 async function getMaxDet(params) {
     try {
-      const result = await pool.query("select coalesce (Max(id),1) from cursos")
+      const result = await pool.query("select coalesce (Max(id),1) from curso_det")
       return result.rows[0].coalesce;
     } catch (error) {
       return 1;
