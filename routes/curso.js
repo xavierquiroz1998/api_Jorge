@@ -29,6 +29,19 @@ try {
     
 });
 
+router.post('/update', async function (req, res) {
+  const text = 'update cursos set descripcion = $2, periodo=$3  where id = $1 RETURNING *'
+  const values = [req.body.id, req.body.descripcion, req.body.periodo]
+
+  try {
+      const result = await pool.query(text, values)
+      res.send(result.rows[0])
+  } catch (err) {
+      console.log(err.stack)
+  }
+});
+
+
 router.post('/det', async function(req, res){
 
     const text = 'INSERT INTO curso_det (id, id_cab, id_socio, id_horario) VALUES($1, $2, $3, $4) RETURNING *'
@@ -45,7 +58,7 @@ try {
 
 
 router.post('/anular', async function (req, res) {
-    const text = "UPDATE tb_usuarios set estado = 'I' where id= $1 RETURNING *"
+    const text = "UPDATE cursos set estado = 'I' where id= $1 RETURNING *"
     const values = [req.body.id]
     try {
         const resultado = await pool.query(text, values)

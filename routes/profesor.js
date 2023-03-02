@@ -29,6 +29,18 @@ router.post('/', async function (req, res) {
   }
 });
 
+router.post('/update', async function (req, res) {
+  const text = 'update tb_profesores set nombres=$2 , apellidos = $3, celular=$4 ,correo = $5, domicilio=$6  where id = $1 RETURNING *'
+  const values = [req.body.id, req.body.nombres, req.body.apellidos, req.body.celular, req.body.correo, req.body.domicilio ]
+
+  try {
+      const result = await pool.query(text, values)
+      res.send(result.rows[0])
+  } catch (err) {
+      console.log(err.stack)
+  }
+});
+
 router.post('/xHorario', async function (req, res) {
   const text = 'INSERT INTO profesor_x_horario(id, id_profesor, id_horario) VALUES($1, $2, $3) RETURNING *'
   const values = [await getMaxHorario() + 1, req.body.id_profesor, req.body.id_horario]
@@ -62,6 +74,8 @@ async function getMaxHorario(params) {
   }
 
 }
+
+
 
 
 router.post('/anular', async function (req, res) {

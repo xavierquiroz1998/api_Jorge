@@ -20,13 +20,25 @@ try {
     console.log(error);
     res.send({});
 }
-    
+});
+
+router.post('/update', async function(req, res){
+
+    const text = 'update tb_usuarios set usuario = $2, nombres=$3, domicilio = $4, correo=$5,celular = $6, contrasenia=$7  where id = $1 RETURNING *'
+    const values = [req.body.id, req.body.usuario, req.body.nombres, req.body.domicilio, req.body.correo, req.body.celular, req.body.contrasenia]
+try {
+    const result = await pool.query(text,values)
+    res.send( result.rows[0])
+} catch (error) {
+    console.log(error);
+    res.send({});
+}
 });
 
 router.get('/login/:usuario/:contra', async function(req, res){
     var u= req.params.usuario;
     var c= req.params.contra;
-    var query = "select * from tb_usuarios where usuario = '"+u+"'"+" and contrasenia='"+c+"'";
+    var query = "select * from tb_usuarios where estado ='A' and usuario = '"+u+"'"+" and contrasenia='"+c+"'";
     try {
         const result = await pool.query(query)
         res.send( result.rows[0])

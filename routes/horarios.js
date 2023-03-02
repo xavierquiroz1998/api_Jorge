@@ -31,6 +31,17 @@ router.post('/', async function (req, res) {
   }
 });
 
+router.post('/update', async function (req, res) {
+  const text = 'update horarios set id_disciplina = $2, nivel=$3, id_categoria=$4 , id_ciclo=$5 , valor=$6 , horario=$7  where id = $1 RETURNING *'
+  const values = [req.body.id, req.body.id_disciplina, req.body.nivel, req.body.id_categoria, req.body.id_ciclo, req.body.valor, req.body.horario]
+
+  try {
+      const result = await pool.query(text, values)
+      res.send(result.rows[0])
+  } catch (err) {
+      console.log(err.stack)
+  }
+});
 
 
 

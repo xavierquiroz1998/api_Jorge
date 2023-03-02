@@ -22,6 +22,18 @@ router.get('/', async function (req, res) {
   });
 
 
+  router.post('/update', async function (req, res) {
+    const text = 'update tb_disciplina set codigo = $2, descripcion=$3  where id = $1 RETURNING *'
+    const values = [req.body.id, req.body.codigo, req.body.descripcion]
+
+    try {
+        const result = await pool.query(text, values)
+        res.send(result.rows[0])
+    } catch (err) {
+        console.log(err.stack)
+    }
+});
+
 
   async function getMax(params) {
     try {
