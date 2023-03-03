@@ -10,6 +10,7 @@ router.get('/', async function (req, res) {
 });
 
 
+
 router.post('/', async function (req, res) {
 
     const text = 'INSERT INTO menu_x_usuario(id, id_usuario, id_menu) VALUES($1, $2, $3) RETURNING *'
@@ -26,7 +27,7 @@ router.post('/', async function (req, res) {
 
 router.get('/permiso/:usuario', async function (req, res) {
     var u = req.params.usuario;
-    const result = await pool.query("select u.id_menu, u.id_usuario,u.create,u.update,u.delete,m.ruta from menu_x_usuario as u inner join menu as m ON u.id_menu= m.id where u.id_usuario = '" + u + "'")
+    const result = await pool.query("select * from menu_usuario where id_usuario = '" + u + "'")
     res.send(result.rows)
 });
 
