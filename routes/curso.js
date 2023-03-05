@@ -17,8 +17,8 @@ router.get('/det/:idcurso', async function(req, res){
 
 router.post('/', async function(req, res){
 
-    const text = 'INSERT INTO cursos (id, descripcion, periodo, estado) VALUES($1, $2, $3, $4) RETURNING *'
-    const values = [await getMax() + 1, req.body.descripcion, req.body.periodo, req.body.estado]
+    const text = 'INSERT INTO cursos (id, descripcion, periodo,  estado, id_horario) VALUES($1, $2, $3, $4, $5) RETURNING *'
+    const values = [await getMax() + 1, req.body.descripcion, req.body.periodo, req.body.estado, req.body.id_horario]
 try {
     const result = await pool.query(text,values)
     res.send( result.rows[0])
@@ -30,8 +30,8 @@ try {
 });
 
 router.post('/update', async function (req, res) {
-  const text = 'update cursos set descripcion = $2, periodo=$3  where id = $1 RETURNING *'
-  const values = [req.body.id, req.body.descripcion, req.body.periodo]
+  const text = 'update cursos set descripcion = $2, periodo=$3 , id_horario=$4  where id = $1 RETURNING *'
+  const values = [req.body.id, req.body.descripcion, req.body.periodo, req.body.id_horario]
 
   try {
       const result = await pool.query(text, values)

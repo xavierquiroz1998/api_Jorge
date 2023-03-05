@@ -11,6 +11,7 @@ const horario = require('./routes/horarios')
 const profesor = require('./routes/profesor')
 const familiares = require('./routes/familiares')
 const cursos = require('./routes/curso')
+const asistencia = require('./routes/asistencias')
 const body_parser = require('body-parser');
 const cors = require('cors');
 
@@ -30,6 +31,7 @@ app.use('/horarios', horario);
 app.use('/profesor', profesor);
 app.use('/familiares', familiares);
 app.use('/cursos', cursos);
+app.use('/asistencia', asistencia);
 
 //app.use( express.static('public') );
 
