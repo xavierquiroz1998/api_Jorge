@@ -12,6 +12,18 @@ router.get('/', async function (req, res) {
   res.send(result.rows)
 });
 
+router.get('/horario/:idprofesor', async function (req, res) {
+  var c= req.params.idprofesor;
+  const result = await pool.query("select * from vw_profesor_x_horario where id_horario ='"+c+"'")
+  res.send(result.rows[0])
+});
+
+router.get('/disciplina/:iddisciplina', async function (req, res) {
+  var c= req.params.iddisciplina;
+  const result = await pool.query("select * from vw_horarios where id_disciplina = '"+c+"'")
+  res.send(result.rows)
+});
+
 router.get('/Xprofesor', async function (req, res) {
   const result = await pool.query('select * from vw_Horario_x_profesor')
   res.send(result.rows)
