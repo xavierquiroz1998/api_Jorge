@@ -10,17 +10,24 @@ router.get('/', async function (req, res) {
   res.send(result.rows)
 });
 
+router.get('/:idUsuario', async function (req, res) {
+  var c= req.params.idUsuario;
+  const result = await pool.query("select * from familiares where id_usuario ='"+c+"'")
+  res.send(result.rows)
+});
+
 
 
 
 router.post('/', async function (req, res) {
-  const text = 'INSERT INTO familiares(id, codigo_socio, nombre_socio, identificacion, nombres, tipo, celular, correo, domicilio, fecha_nac, estado) VALUES($1, $2, $3, $4, $5, $6, $7,$8, $9, $10,$11) RETURNING *'
-  const values = [await getMax() + 1, req.body.codigo_socio, req.body.nombre_socio, req.body.identificacion, req.body.nombres, req.body.tipo, req.body.celular, req.body.correo, req.body.domicilio, req.body.fecha_nac, req.body.estado]
+  const text = 'INSERT INTO familiares(id, codigo_socio, nombre_socio, identificacion, nombres, tipo, celular, correo, domicilio, fecha_nac, estado, id_usuario) VALUES($1, $2, $3, $4, $5, $6, $7,$8, $9, $10,$11, $12) RETURNING *'
+  const values = [await getMax() + 1, req.body.codigo_socio, req.body.nombre_socio, req.body.identificacion, req.body.nombres, req.body.tipo, req.body.celular, req.body.correo, req.body.domicilio, req.body.fecha_nac, req.body.estado, req.body.id_usuario]
 
   try {
     const resultado = await pool.query(text, values)
     res.send(resultado.rows[0])
   } catch (err) {
+    console.error(err)
     res.send({})
   }
 });

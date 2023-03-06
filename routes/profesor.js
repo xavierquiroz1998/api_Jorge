@@ -10,8 +10,9 @@ router.get('/', async function (req, res) {
 });
 
 
-router.get('/xHorario', async function (req, res) {
-  const result = await pool.query('select * from profesor_x_horario')
+router.get('/xHorario/:idProfesor', async function (req, res) {
+  var c= req.params.idProfesor;
+  const result = await pool.query("select * from profesor_x_horario where id_profesor ='"+c+"'")
   res.send(result.rows)
 });
 
@@ -40,6 +41,19 @@ router.post('/update', async function (req, res) {
       console.log(err.stack)
   }
 });
+
+router.post('/delete', async function (req, res) {
+  const text = 'delete from profesor_x_horario where id_profesor =$1 RETURNING *'
+  const values = [req.body.id ]
+
+  try {
+      const result = await pool.query(text, values)
+      res.send(result.rows[0])
+  } catch (err) {
+      console.log(err.stack)
+  }
+});
+
 
 router.post('/xHorario', async function (req, res) {
   const text = 'INSERT INTO profesor_x_horario(id, id_profesor, id_horario) VALUES($1, $2, $3) RETURNING *'
