@@ -20,8 +20,8 @@ router.get('/:idUsuario', async function (req, res) {
 
 
 router.post('/', async function (req, res) {
-  const text = 'INSERT INTO familiares(id, codigo_socio, nombre_socio, identificacion, nombres, tipo, celular, correo, domicilio, fecha_nac, estado, id_usuario) VALUES($1, $2, $3, $4, $5, $6, $7,$8, $9, $10,$11, $12) RETURNING *'
-  const values = [await getMax() + 1, req.body.codigo_socio, req.body.nombre_socio, req.body.identificacion, req.body.nombres, req.body.tipo, req.body.celular, req.body.correo, req.body.domicilio, req.body.fecha_nac, req.body.estado, req.body.id_usuario]
+  const text = 'INSERT INTO familiares(id, codigo_socio, nombre_socio, identificacion, nombres, tipo, celular, correo, domicilio, fecha_nac, estado, id_usuario, img) VALUES($1, $2, $3, $4, $5, $6, $7,$8, $9, $10,$11, $12, $13) RETURNING *'
+  const values = [await getMax() + 1, req.body.codigo_socio, req.body.nombre_socio, req.body.identificacion, req.body.nombres, req.body.tipo, req.body.celular, req.body.correo, req.body.domicilio, req.body.fecha_nac, req.body.estado, req.body.id_usuario, req.body.img]
 
   try {
     const resultado = await pool.query(text, values)
