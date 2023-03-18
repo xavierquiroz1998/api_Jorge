@@ -26,6 +26,19 @@ try {
     console.log(error);
     res.send({});
 }
+});
+
+router.get('/existCourse/:periodo/:horario', async function(req, res){
+  var p= req.params.periodo;
+  var h= req.params.horario;
+  const text = "select * from cursos where periodo= '"+p+"' and id_horario = '"+h+"'";
+  try {
+    const result = await pool.query(text)
+    res.send( result.rows[0])
+  } catch (error) {
+    console.log(error.stack)
+  }
+
     
 });
 
@@ -80,7 +93,7 @@ async function getMax(params) {
   }
 async function getMaxDet(params) {
     try {
-      const result = await pool.query("select coalesce (Max(id),1) from curso_det")
+      const result = await pool.query("select coalesce (Max(id_cab),1) from curso_det")
       return result.rows[0].coalesce;
     } catch (error) {
       return 1;
