@@ -84,7 +84,7 @@ router.post('/anular', async function (req, res) {
 
 async function getMax(params) {
     try {
-      const result = await pool.query("select coalesce (Max(id),1) from cursos")
+      const result = await pool.query("select coalesce (Max(id),0) from cursos")
       return result.rows[0].coalesce;
     } catch (error) {
       return 1;
@@ -93,7 +93,7 @@ async function getMax(params) {
   }
 async function getMaxDet(params) {
     try {
-      const result = await pool.query("select coalesce (Max(id_cab),1) from curso_det")
+      const result = await pool.query("select coalesce (Max(id_cab),0) from curso_det")
       return result.rows[0].coalesce;
     } catch (error) {
       return 1;

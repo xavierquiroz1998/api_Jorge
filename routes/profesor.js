@@ -71,7 +71,7 @@ router.post('/xHorario', async function (req, res) {
 
 async function getMax(params) {
   try {
-    const result = await pool.query("select coalesce (Max(id),1) from tb_profesores")
+    const result = await pool.query("select coalesce (Max(id),0) from tb_profesores")
     return result.rows[0].coalesce;
   } catch (error) {
     return 1;
@@ -81,7 +81,7 @@ async function getMax(params) {
 
 async function getMaxHorario(params) {
   try {
-    const result = await pool.query("select coalesce (Max(id),1) from profesor_x_horario")
+    const result = await pool.query("select coalesce (Max(id),0) from profesor_x_horario")
     return result.rows[0].coalesce;
   } catch (error) {
     return 1;

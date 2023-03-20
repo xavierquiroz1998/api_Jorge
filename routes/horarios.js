@@ -62,7 +62,7 @@ router.post('/update', async function (req, res) {
 
 async function getMax(params) {
   try {
-    const result = await pool.query("select coalesce (Max(id),1) from horarios")
+    const result = await pool.query("select coalesce (Max(id),0) from horarios")
     return result.rows[0].coalesce;
   } catch (error) {
     return 1;

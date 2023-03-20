@@ -65,7 +65,7 @@ router.get('/:idasistencia', async function(req, res){
 
 async function getMax(params) {
     try {
-      const result = await pool.query("select coalesce (Max(id_asistencia),1) from asistencias")
+      const result = await pool.query("select coalesce (Max(id_asistencia),0) from asistencias")
       return result.rows[0].coalesce;
     } catch (error) {
       return 1;
@@ -74,7 +74,7 @@ async function getMax(params) {
   }
 async function getMaxDet(params) {
     try {
-      const result = await pool.query("select coalesce (Max(secuencia),1) from asistencias_det")
+      const result = await pool.query("select coalesce (Max(secuencia),0) from asistencias_det")
       return result.rows[0].coalesce;
     } catch (error) {
       return 1;

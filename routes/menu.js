@@ -34,7 +34,7 @@ router.get('/permiso/:usuario', async function (req, res) {
 
 async function getMax(params) {
     try {
-        const result = await pool.query("select coalesce (Max(id),1) from menu_x_usuario")
+        const result = await pool.query("select coalesce (Max(id),0) from menu_x_usuario")
         return result.rows[0].coalesce;
     } catch (error) {
         return 1;

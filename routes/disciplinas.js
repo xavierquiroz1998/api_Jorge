@@ -37,7 +37,7 @@ router.get('/', async function (req, res) {
 
   async function getMax(params) {
     try {
-      const result = await pool.query("select coalesce (Max(id),1) from tb_disciplina")
+      const result = await pool.query("select coalesce (Max(id),0) from tb_disciplina")
       return result.rows[0].coalesce;
     } catch (error) {
       return 1;

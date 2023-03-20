@@ -57,7 +57,7 @@ router.post('/anular', async function (req, res) {
 
 async function getMax(params) {
     try {
-        const result = await pool.query("select coalesce (Max(id),1) from persona")
+        const result = await pool.query("select coalesce (Max(id),0) from persona")
         return result.rows[0].coalesce;
     } catch (error) {
         return 1;
