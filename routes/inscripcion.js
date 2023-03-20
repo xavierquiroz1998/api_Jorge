@@ -12,7 +12,7 @@ router.get('/', async function (req, res) {
 
   router.get('/:usuario', async function (req, res) {
     var p= req.params.usuario;
-    const result = await pool.query("select * from inscripcion where id_usuario '"+p+"'")
+    const result = await pool.query("select * from inscripcion where id_usuario ='"+p+"'")
     res.send(result.rows)
   });
 
@@ -32,6 +32,17 @@ router.post('/', async function (req, res) {
     }
   });
 
+  router.post('/update', async function (req, res) {
+    const text = 'update inscripcion set descripcion = $2, periodo=$3 , id_horario=$4 , id_familiar=$5 where id = $1 RETURNING *'
+    const values = [req.body.id, req.body.descripcion, req.body.periodo, req.body.id_horario, , req.body.id_familiar]
+  
+    try {
+        const result = await pool.query(text, values)
+        res.send(result.rows[0])
+    } catch (err) {
+        console.log(err.stack)
+    }
+  });
 
 
 
