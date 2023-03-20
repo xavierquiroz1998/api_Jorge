@@ -14,13 +14,14 @@ router.get('/', async function (req, res) {
 
 
 router.post('/', async function (req, res) {
-    const text = 'INSERT INTO inscripcion(id, descripcion, periodo, estado, id_horario, id_familiar) VALUES($1, $2, $3, $4, $5, $6) RETURNING *'
-    const values = [await getMax() + 1, req.body.descripcion, req.body.periodo, req.body.estado, req.body.id_horario, req.body.id_familiar]
+    const text = 'INSERT INTO inscripcion(id, descripcion, periodo, estado, id_horario, id_familiar, id_usuario) VALUES($1, $2, $3, $4, $5, $6,$7) RETURNING *'
+    const values = [await getMax() + 1, req.body.descripcion, req.body.periodo, req.body.estado, req.body.id_horario, req.body.id_familiar, req.body.id_usuario]
   
     try {
       const resultado = await pool.query(text, values)
       res.send(resultado.rows[0])
     } catch (err) {
+      console.log(err);
       res.send({})
     }
   });

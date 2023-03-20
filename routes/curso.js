@@ -31,7 +31,7 @@ try {
 router.get('/existCourse/:periodo/:horario', async function(req, res){
   var p= req.params.periodo;
   var h= req.params.horario;
-  const text = "select * from cursos where periodo= '"+p+"' and id_horario = '"+h+"'";
+  const text = "select * from cursos where estado = 'A' and periodo= '"+p+"' and id_horario = '"+h+"'";
   try {
     const result = await pool.query(text)
     res.send( result.rows[0])
