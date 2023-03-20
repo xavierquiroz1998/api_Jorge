@@ -10,6 +10,12 @@ router.get('/', async function (req, res) {
     res.send(result.rows)
   });
 
+  router.get('/:usuario', async function (req, res) {
+    var p= req.params.usuario;
+    const result = await pool.query("select * from inscripcion where id_usuario '"+p+"'")
+    res.send(result.rows)
+  });
+
 
 
 
